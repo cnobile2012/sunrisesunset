@@ -232,7 +232,9 @@ if __name__ == '__main__':
     print "\nTest 24 hours"
 
     for hour in range(24):
-        date = now.replace(hour=hour, minute=0, second=0, microsecond=0)
-        __getRiseSet(date)
+        for minute in range(0, 60, 10):
+            date = now.replace(hour=hour, minute=minute, second=0,
+                               microsecond=0)
+            __getRiseSet(date)
 
     sys.exit(0)
