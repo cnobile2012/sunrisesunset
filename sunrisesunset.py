@@ -40,7 +40,7 @@ class SunriseSunset(object):
 
         @param date: A localized datetime object that is timezone aware.
         @param lat: The latitude.
-        @param lon: the longitude.
+        @param lon: The longitude.
         @keyword zenith: The zenith name.
         """
         if not isinstance(date, datetime.datetime) or date.tzinfo is None:
