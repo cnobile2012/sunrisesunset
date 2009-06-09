@@ -109,7 +109,7 @@ class SunriseSunset(object):
 
         @param ephem2000Day: The Ephemeris from the beginning of the
                              21st century.
-        @param rs: The factor that determinus either sunrise or sunset where
+        @param rs: The factor that determines either sunrise or sunset where
                    1 equals sunrise and -1 sunset.
         @return: Either the sunrise or sunset as a C{datetime} object.
         """
