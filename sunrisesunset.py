@@ -17,7 +17,20 @@
 # $Date$
 # $Revision$
 #----------------------------------
-
+##########################################################################
+# Copyright (c) 2009 Carl J. Nobile.
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# This Copyright covers only the implimentation of the algorithm used in
+# this code and does not cover the algorithm itself which is in the
+# public domain.
+#
+# Contributors:
+#    Carl J. Nobile - initial API and implementation
+##########################################################################
 
 import datetime
 from math import degrees, radians, atan, cos, sin, pi, sqrt, fabs
