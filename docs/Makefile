@@ -18,7 +18,7 @@ all	: api-docs
 #----------------------------------------------------------------------
 api-docs:
 	@(cd ..; epydoc -v --docformat epytext \
-          --name "Python WSGI RESTful Framework" -o docs/api --show-private \
+          --name "Sunrise Sunset Calculator" -o docs/api --show-private \
           --show-imports --graph all --url "${URL}" *.py \
          )
 #----------------------------------------------------------------------
