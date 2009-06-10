@@ -2,11 +2,12 @@
 #
 # sunrisesunset.py
 #
-# This code is valid for dates from 1901 to 2009, and will not calculate
+# This code is valid for dates from 1901 to 2099, and will not calculate
 # sunrise/sunset times for latitudes above/below 63/-63 degrees.
 #
-# It uses no external packages to use the class SunriseSunset. If you run
-# the tests you will need to install pytz as shown below.
+# No external packages are used when using the class SunriseSunset. If you
+# run the tests you will need to install pytz as shown below or use your
+# package installer if it's available.
 #
 # $ sudo easy_install --upgrade pytz
 #
@@ -51,7 +52,7 @@ class SunriseSunset(object):
             msg = "Invalid zenith name [%s] must be one of: %s"
             raise ValueError(msg % (zenith, self.__ZENITH.keys()))
 
-        if fabs(lat) > 63:
+        if abs(lat) > 63:
             raise ValueError('Invalid latitude: %s' % lat)
 
         self.__dateLocal = date
@@ -61,7 +62,7 @@ class SunriseSunset(object):
         localTuple = date.timetuple()
         utcTuple = date.utctimetuple()
         self.__offsetUTC = (localTuple[3] - utcTuple[3]) + \
-                           (localTuple[4] - utcTuple[4])/60.0
+                           (localTuple[4] - utcTuple[4]) / 60.0
         self.__sunrise = None
         self.__sunset = None
         self.__determineRiseSet()
@@ -98,10 +99,8 @@ class SunriseSunset(object):
         # Ephemeris
         ephem2000Day = 367 * year - (7 * (year + (month + 9) / 12) / 4) + \
                        (275 * month / 9) + day - 730531.5
-        riseTime = self.__determineRiseOrSet(ephem2000Day, 1)
-        setTime = self.__determineRiseOrSet(ephem2000Day, -1)
-        self.__sunrise = riseTime
-        self.__sunset = setTime
+        self.__sunrise = self.__determineRiseOrSet(ephem2000Day, 1)
+        self.__sunset = self.__determineRiseOrSet(ephem2000Day, -1)
 
     def __determineRiseOrSet(self, ephem2000Day, rs):
         """
@@ -168,7 +167,7 @@ class SunriseSunset(object):
 
     def __get24HourLocalTime(self, rs, decimalTime):
         """
-        Convert the decimal time into a local time C{datetime} object
+        Convert the decimal time into a local time (C{datetime} object)
         and correct for a 24 hour clock.
 
         @param rs: The factor that determinus either sunrise or sunset where
@@ -203,8 +202,8 @@ class SunriseSunset(object):
 
 def __getRiseSet(date, lat=35.9513, lon=-83.9142, zenith='official'):
     """
-    The default city and state is Knoxville, TN.
-    The default zenith is 'official'
+    The default lat and lon are for Knoxville, TN. The default zenith is
+    'official'.
     """
     rs = SunriseSunset(date, lat, lon, zenith=zenith)
     riseTime, setTime = rs.getSunRiseSet()
