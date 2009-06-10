@@ -8,7 +8,7 @@
 
 PREFIX		= $(shell pwd)
 PACKAGE_DIR     = $(shell echo $${PWD\#\#*/})
-CONF		= conf
+CHANGE_LOG	= ChangeLog
 DOCS		= $(PREFIX)/docs
 
 #----------------------------------------------------------------------
@@ -19,7 +19,11 @@ doc	:
 	@(cd $(DOCS); make)
 
 #----------------------------------------------------------------------
-tar	: clean
+log	:
+	@rcs2log -h tetrasys.homelinux.org > $(CHANGE_LOG)
+
+#----------------------------------------------------------------------
+tar	: clean log
 	@(cd ..; tar -czvf $(PACKAGE_DIR).tar.gz --exclude="CVS" \
           $(PACKAGE_DIR))
 
@@ -29,4 +33,5 @@ clean	:
 	@(cd ${DOCS}; make clean)
 
 clobber	: clean
+	@rm -f $(CHANGE_LOG)
 	@(cd ${DOCS}; make clobber)
