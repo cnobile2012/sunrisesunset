@@ -170,7 +170,7 @@ class SunriseSunset(object):
         Convert the decimal time into a local time (C{datetime} object)
         and correct for a 24 hour clock.
 
-        @param rs: The factor that determinus either sunrise or sunset where
+        @param rs: The factor that determines either sunrise or sunset where
                    1 equals sunrise and -1 sunset.
         @param decimalTime: The decimal time.
         @return: The C{datetime} objects set to either sunrise or sunset.
