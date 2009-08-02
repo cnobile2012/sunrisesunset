@@ -80,16 +80,26 @@ class SunriseSunset(object):
         self.__sunset = None
         self.__determineRiseSet()
 
-    def isNight(self):
+    def isNight(self, collar=0):
         """
-        Check if it is day or night.
+        Check if it is day or night. If the 'collar' keyword argument is
+        changed it will skew the results to either before or after the real
+        sunrise and sunset. This is useful if lead and lag timea are needed
+        around the actual sunrise and sunset.
 
+        Note::
+            If collar == 30 then this method will say it is daytime 30
+            minutes before the actual sunrise and likewise 30 minutes after
+            sunset it would indicate it is night.
+
+        @keyword collar: The minutes before or after sunrise and sunset.
         @return: True if it is night else False if day.
         """
         result = False
+        delta = datetime.timedelta(minutes=collar)
 
-        if self.__sunrise > self.__dateLocal or \
-               self.__dateLocal > self.__sunset:
+        if (self.__sunrise - delta) > self.__dateLocal or \
+               self.__dateLocal > (self.__sunset + delta):
             result = True
 
         return result
