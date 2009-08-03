@@ -17,6 +17,10 @@
 # $Date$
 # $Revision$
 #----------------------------------
+#
+# Contributions by:
+#    Darryl Smith -- Noticed a bug with atan fixed with atan2.
+#
 ##########################################################################
 # Copyright (c) 2009 Carl J. Nobile.
 # All rights reserved. This program and the accompanying materials
@@ -33,7 +37,7 @@
 ##########################################################################
 
 import datetime
-from math import degrees, radians, atan, cos, sin, pi, sqrt, fabs
+from math import degrees, radians, atan2, cos, sin, pi, sqrt, fabs
 
 
 class SunriseSunset(object):
@@ -158,7 +162,7 @@ class SunriseSunset(object):
             e = -1 * ec + 0.0430398 * sin(2 * lam) - 0.00092502 * sin(4 * lam)
             obl = 0.409093 - 0.0002269 * t
             delta = sin(obl) * sin(lam)
-            delta = atan(delta / sqrt(1 - delta * delta))
+            delta = atan2(delta, sqrt(1 - delta * delta))
             gha = utold - pi + e
             cosc = (sinAlt - sinPhi * sin(delta)) / (cosPhi * cos(delta))
 
@@ -167,7 +171,7 @@ class SunriseSunset(object):
             elif cosc < -1:
                 correction = pi
             else:
-                correction = atan((sqrt(1 - cosc * cosc)) / cosc)
+                correction = atan2((sqrt(1 - cosc * cosc)), cosc)
 
             #print cosc, correction, utold, utnew
             utnew = self.__getRange(utold - (gha + lon + rs * correction))
@@ -205,11 +209,6 @@ class SunriseSunset(object):
             decimalTime += 24.0
         elif decimalTime > 24.0:
             decimalTime -= 24.0
-
-        if rs == 1 and int(decimalTime) > 12:
-            decimalTime -= 12
-        elif rs == -1 and int(decimalTime) < 13:
-            decimalTime += 12
 
         #print decimalTime
         hour = int(decimalTime)
