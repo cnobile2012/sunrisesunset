@@ -88,7 +88,7 @@ class SunriseSunset(object):
         """
         Check if it is day or night. If the 'collar' keyword argument is
         changed it will skew the results to either before or after the real
-        sunrise and sunset. This is useful if lead and lag timea are needed
+        sunrise and sunset. This is useful if lead and lag times are needed
         around the actual sunrise and sunset.
 
         Note::
