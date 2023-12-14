@@ -147,7 +147,7 @@ class SunriseSunset(object):
         cosPhi = cos(radians(self.__lat))     #
         lon = radians(self.__lon)             # viewer's longitude
         ct = 0
-        #print rs, ephem2000Day, sinAlt, sinPhi, cosPhi, lon
+        #print(rs, ephem2000Day, sinAlt, sinPhi, cosPhi, lon)
 
         while fabs(utold - utnew) > 0.001 and ct < 35:
             ct += 1
@@ -173,11 +173,11 @@ class SunriseSunset(object):
             else:
                 correction = atan2((sqrt(1 - cosc * cosc)), cosc)
 
-            #print cosc, correction, utold, utnew
+            #print(cosc, correction, utold, utnew)
             utnew = self.__getRange(utold - (gha + lon + rs * correction))
 
         decimalTime = degrees(utnew) / 15
-        #print utnew, decimalTime
+        #print(utnew, decimalTime)
         return self.__get24HourLocalTime(rs, decimalTime)
 
     def __getRange(self, value):
@@ -203,14 +203,14 @@ class SunriseSunset(object):
         @return: The C{datetime} objects set to either sunrise or sunset.
         """
         decimalTime += self.__offsetUTC
-        #print decimalTime
+        #print(decimalTime)
 
         if decimalTime < 0.0:
             decimalTime += 24.0
         elif decimalTime > 24.0:
             decimalTime -= 24.0
 
-        #print decimalTime
+        #print(decimalTime)
         hour = int(decimalTime)
         tmp = (decimalTime - hour) * 60
         minute = int(tmp)
@@ -229,11 +229,11 @@ def __getRiseSet(date, lat=35.9513, lon=-83.9142, zenith='official'):
     """
     rs = SunriseSunset(date, lat, lon, zenith=zenith)
     riseTime, setTime = rs.getSunRiseSet()
-    print "Using zenith: %s" % zenith
-    print "Date/Time now: %s" % date
-    print "Sunrise: %s" % riseTime
-    print " Sunset: %s" % setTime
-    print "Is night: %s\n" % rs.isNight()
+    print("Using zenith: %s" % zenith)
+    print("Date/Time now: %s" % date)
+    print("Sunrise: %s" % riseTime)
+    print(" Sunset: %s" % setTime)
+    print("Is night: %s\n" % rs.isNight())
 
 
 if __name__ == '__main__':
@@ -244,13 +244,13 @@ if __name__ == '__main__':
     now = datetime.datetime.now(zone)
     # Get the zenith types.
     zenithKeys = SunriseSunset._SunriseSunset__ZENITH.keys()
-    print "Test zenith"
+    print("Test zenith")
 
     for zenith in zenithKeys:
         __getRiseSet(now, zenith=zenith)
 
     # Get sunrise sunset for every hour of the day using the default zenith.
-    print "\nTest 24 hours"
+    print("\nTest 24 hours")
 
     for hour in range(24):
         for minute in range(0, 60, 10):
