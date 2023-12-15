@@ -41,3 +41,5 @@ Basic Usage
     print(f"      Sunset: {set_time}")
     print(f"    Is night: {rs.is_night()}\n")
 
+There is a more complete example in the test at the end of the
+```sunrisesunset.py```.
