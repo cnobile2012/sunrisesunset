@@ -1,8 +1,16 @@
+# -*- coding: utf-8 -*-
+
 import os
 import re
 from setuptools import setup
 
 def version():
+    """
+    Find the version.
+
+    :return: The version.
+    :rtype: str
+    """
     regex = r'(?m)(^{}[\s]*=[\s]*(?P<ver>\d*)$)'
 
     with open(os.path.join(os.path.dirname(__file__), 'include.mk')) as f:
@@ -13,7 +21,7 @@ def version():
     patch = re.search(regex.format('PATCHLEVEL'), ver).group('ver')
     # Look for a tag indicating a pre-release candidate. ex. rc1
     env_value = os.environ.get('PR_TAG', '')
-    return "{}.{}.{}{}".format(major, minor, patch, env_value)
+    return f"{major}.{minor}.{patch}{env_value}"
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
     README = readme.read()

@@ -5,4 +5,4 @@
 
 from .sunrisesunset import SunriseSunset
 
-__all__ = (SunriseSunset,)
+__all__ = ('SunriseSunset',)

@@ -58,7 +58,7 @@ month, and day needs to be entered.
 
     python sunrisesunset/sunrisesunset.py
 
-    Enter a address: Chicago
+    Enter an address: Chicago
     Chicago, Cook County, Illinois, United States
     Enter date in ISO format (yyyy-mm-dd hh:mm:ss): 2023-12-16 12
     Timezone: America/Chicago
@@ -92,3 +92,6 @@ month, and day needs to be entered.
          Sunrise: 2023-12-16 06:30:29.951023-05:00
           Sunset: 2023-12-16 19:00:39.782789-05:00
         Is night: False
+
+    Test 24 hours
+    ...

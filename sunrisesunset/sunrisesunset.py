@@ -32,7 +32,7 @@ class SunriseSunset:
                 'astronomical': -18.0}
 
     def __init__(self, date:datetime, lat:float, lon:float,
-                 zenith:str='official'):
+                 zenith:str='official') -> None:
         """
         Set the values for the sunrise and sunset calculation.
 
@@ -114,14 +114,16 @@ class SunriseSunset:
         self.__sunrise = self.__determine_rise_or_set(ephem2000day, 1)
         self.__sunset = self.__determine_rise_or_set(ephem2000day, -1)
 
-    def __determine_rise_or_set(self, ephem2000day:float, rs) -> datetime:
+    def __determine_rise_or_set(self, ephem2000day:float, rs:int) -> datetime:
         """
         Determine either the sunrise or the sunset.
 
         :param ephem2000day: The Ephemeris from the beginning of the
                              21st century.
+        :type ephem2000day: float
         :param rs: The factor that determines either sunrise or sunset where
                    1 equals sunrise and -1 sunset.
+        :type rs: int
         :return: Either the sunrise or sunset as a C{datetime} object.
         """
         utold = pi
@@ -129,10 +131,10 @@ class SunriseSunset:
         altitude = self.__ZENITH[self.__zenith]
         sin_alt = sin(radians(altitude))    # solar altitude
         sin_phi = sin(radians(self.__lat))  # viewer's latitude
-        cos_Phi = cos(radians(self.__lat))  #
+        cos_phi = cos(radians(self.__lat))  #
         lon = radians(self.__lon)           # viewer's longitude
         ct = 0
-        #print(rs, ephem2000day, sin_alt, sin_phi, cos_Phi, lon)
+        #print(rs, ephem2000day, sin_alt, sin_phi, cos_phi, lon)
 
         while fabs(utold - utnew) > 0.001 and ct < 35:
             ct += 1
@@ -149,7 +151,7 @@ class SunriseSunset:
             delta = sin(obl) * sin(lam)
             delta = atan2(delta, sqrt(1 - delta * delta))
             gha = utold - pi + e
-            cosc = (sin_alt - sin_phi * sin(delta)) / (cos_Phi * cos(delta))
+            cosc = (sin_alt - sin_phi * sin(delta)) / (cos_phi * cos(delta))
 
             if cosc > 1:
                 correction = 0
@@ -161,9 +163,9 @@ class SunriseSunset:
             #print(cosc, correction, utold, utnew)
             utnew = self.__get_range(utold - (gha + lon + rs * correction))
 
-        decimalTime = degrees(utnew) / 15
-        #print(utnew, decimalTime)
-        return self.__get_24_hour_local_time(rs, decimalTime)
+        decimal_time = degrees(utnew) / 15
+        #print(utnew, decimal_time)
+        return self.__get_24_hour_local_time(decimal_time)
 
     def __get_range(self, value:float) -> float:
         """
@@ -176,17 +178,17 @@ class SunriseSunset:
         """
         tmp1 = value / (2.0 * pi)
         tmp2 = (2.0 * pi) * (tmp1 - int(tmp1))
-        if tmp2 < 0.0: tmp2 += (2.0 * pi)
+
+        if tmp2 < 0.0:
+            tmp2 += (2.0 * pi)
+
         return tmp2
 
-    def __get_24_hour_local_time(self, rs:int, decimal_time:float) -> datetime:
+    def __get_24_hour_local_time(self, decimal_time:float) -> datetime:
         """
         Convert the decimal time into a local time (C{datetime} object)
         and correct for a 24 hour clock.
 
-        :param rs: The factor that determines either sunrise or sunset where
-                   1 equals sunrise and -1 sunset.
-        :type rs: int
         :param decimal_time: The decimal time.
         :type decimal_time: float
         :return: The C{datetime} objects set to either sunrise or sunset.
@@ -226,14 +228,15 @@ def __get_rise_set(date, lat=35.9513, lon=-83.9142, zenith='official'):
 
 
 if __name__ == '__main__':
-    import sys, pytz
+    import sys
+    import pytz
     #from pprint import pprint
     from geopy.geocoders import Nominatim
     from timezonefinder import TimezoneFinder
 
     ret = 1
     geolocator = Nominatim(user_agent='sunrisesunset')
-    address = input('Enter a address: ')
+    address = input('Enter an address: ')
     location = geolocator.geocode(address)
     print(location)
 
@@ -242,38 +245,39 @@ if __name__ == '__main__':
         lat = float(raw['lat'])
         lon = float(raw['lon'])
         #pprint(raw)
-        date = input('Enter date in ISO format (yyyy-mm-dd hh:mm:ss): ')
+        text_date = input('Enter date in ISO format (yyyy-mm-dd hh:mm:ss): ')
         tf = TimezoneFinder()
         tz = tf.timezone_at(lng=lon, lat=lat)
         print(f"Timezone: {tz}")
 
         try:
             zone = pytz.timezone(tz)
-            dt = datetime.datetime.fromisoformat(date)
+            dt = datetime.datetime.fromisoformat(text_date)
         except pytz.UnknownTimeZoneError:
             print(f"The entered timezone '{tz}' is not valid.")
         except ValueError:
-            print(f"The entered date '{date}' is not valid.")
+            print(f"The entered date '{text_date}' is not valid.")
         else:
             # Get sunrise and sunset for the given time and calculate
             # for all zenith types.
             dt = dt.astimezone(zone)
             # Get the zenith types.
-            zenithKeys = SunriseSunset._SunriseSunset__ZENITH.keys()
+            zenith_keys = SunriseSunset._SunriseSunset__ZENITH.keys()
             print("Test zenith")
 
-            for zenith in zenithKeys:
+            for zenith in zenith_keys:
                 __get_rise_set(dt, lat=lat, lon=lon, zenith=zenith)
 
             # Get sunrise sunset for every hour of the day using the
             # default zenith.
-            ## print("\nTest 24 hours")
+            print("\nTest 24 hours")
 
-            ## for hour in range(24):
-            ##     for minute in range(0, 60, 10):
-            ##         date = now.replace(hour=hour, minute=minute,
-            ##                            second=0, microsecond=0)
-            ##         __get_rise_set(date, lat=lat, lon=lon)
+            for hour in range(24):
+                # Every 20 minutes for an hour.
+                for minute in range(0, 60, 20):
+                    date = dt.replace(hour=hour, minute=minute,
+                                      second=0, microsecond=0)
+                    __get_rise_set(date, lat=lat, lon=lon)
 
             ret = 0
     else:
