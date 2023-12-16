@@ -229,6 +229,7 @@ if __name__ == '__main__':
     import sys, pytz
     #from pprint import pprint
     from geopy.geocoders import Nominatim
+    from timezonefinder import TimezoneFinder
 
     ret = 1
     geolocator = Nominatim(user_agent='sunrisesunset')
@@ -242,7 +243,9 @@ if __name__ == '__main__':
         lon = float(raw['lon'])
         #pprint(raw)
         date = input('Enter date in ISO format (yyyy-mm-dd hh:mm:ss): ')
-        tz = input('Enter timezone: ')
+        tf = TimezoneFinder()
+        tz = tf.timezone_at(lng=lon, lat=lat)
+        print(f"Timezone: {tz}")
 
         try:
             zone = pytz.timezone(tz)

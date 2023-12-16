@@ -41,15 +41,18 @@ Basic Usage
     print(f"      Sunset: {set_time}")
     print(f"    Is night: {rs.is_night()}\n")
 
-Renning Test
-============
+Running the Test
+================
+
+The pip installed package will not be enough to run the test. You will
+also need to pip install geopy and timezonefinder.
 
 There is a more complete example in the test at the end of the
 ```sunrisesunset.py``` file.
 
 You will be asked for an address, just a city name is okay. Then you will
 be asked for the time. It takes an ISO formatted time at minimum the year,
-month, and day needs to be entered. Finally enter the timezone.
+month, and day needs to be entered.
 
 .. code-block:: console
 
@@ -58,7 +61,7 @@ month, and day needs to be entered. Finally enter the timezone.
     Enter a address: Chicago
     Chicago, Cook County, Illinois, United States
     Enter date in ISO format (yyyy-mm-dd hh:mm:ss): 2023-12-16 12
-    Enter timezone: EST
+    Timezone: America/Chicago
     Test zenith
     Using zenith: official
        Date/Time: 2023-12-16 12:00:00-05:00
