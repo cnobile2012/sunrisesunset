@@ -41,5 +41,51 @@ Basic Usage
     print(f"      Sunset: {set_time}")
     print(f"    Is night: {rs.is_night()}\n")
 
+Renning Test
+============
+
 There is a more complete example in the test at the end of the
-```sunrisesunset.py```.
+```sunrisesunset.py``` file.
+
+You will be asked for an address, just a city name is okay. Then you will
+be asked for the time. It takes an ISO formatted time at minimum the year,
+month, and day needs to be entered. Finally enter the timezone.
+
+.. code-block:: console
+
+    python sunrisesunset/sunrisesunset.py
+
+    Enter a address: Chicago
+    Chicago, Cook County, Illinois, United States
+    Enter date in ISO format (yyyy-mm-dd hh:mm:ss): 2023-12-16 12
+    Enter timezone: EST
+    Test zenith
+    Using zenith: official
+       Date/Time: 2023-12-16 12:00:00-05:00
+         Sunrise: 2023-12-16 08:11:12.111139-05:00
+          Sunset: 2023-12-16 17:20:16.524534-05:00
+        Is night: False
+
+    Using zenith: civil
+       Date/Time: 2023-12-16 12:00:00-05:00
+         Sunrise: 2023-12-16 07:39:33.419425-05:00
+          Sunset: 2023-12-16 17:51:55.167217-05:00
+        Is night: False
+
+    Using zenith: nautical
+       Date/Time: 2023-12-16 12:00:00-05:00
+         Sunrise: 2023-12-16 07:04:25.491129-05:00
+          Sunset: 2023-12-16 18:27:03.015662-05:00
+        Is night: False
+
+    Using zenith: amateur
+       Date/Time: 2023-12-16 12:00:00-05:00
+         Sunrise: 2023-12-16 06:47:20.286033-05:00
+          Sunset: 2023-12-16 18:44:08.169022-05:00
+        Is night: False
+
+    Using zenith: astronomical
+       Date/Time: 2023-12-16 12:00:00-05:00
+         Sunrise: 2023-12-16 06:30:29.951023-05:00
+          Sunset: 2023-12-16 19:00:39.782789-05:00
+        Is night: False
