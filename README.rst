@@ -93,5 +93,5 @@ month, and day needs to be entered.
           Sunset: 2023-12-16 19:00:39.782789-05:00
         Is night: False
 
-    Test 24 hours
+    Test 24 hours for every 20 minutes.
     ...

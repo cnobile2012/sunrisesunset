@@ -2,18 +2,20 @@
 #
 # sunrisesunset.py
 #
-# This code is valid for dates from 1901 to 2099, and will not calculate
-# sunrise/sunset times for latitudes above/below 63/-63 degrees.
-#
-# No external packages are used when using the class SunriseSunset. If you
-# run the tests you will need to install pytz as shown below or use your
-# package installer if it's available.
-#
-#----------------------------------
-#
-# Contributions by:
-#    Darryl Smith -- Noticed a bug with atan fixed with atan2.
-#
+"""
+This code is valid for dates from 1901 to 2099, and will not calculate
+sunrise/sunset times for latitudes above/below 63/-63 degrees.
+
+No external packages are used when using the class SunriseSunset. If you
+run the tests you will need to install pytz, geopy, and timezonefinder as
+shown below or use your package installer if it's available.
+----------------------------------
+
+Contributions by:
+   Darryl Smith -- Noticed a bug with atan fixed with atan2.
+"""
+__docformat__ = "restructuredtext en"
+
 
 import datetime
 from math import degrees, radians, atan2, cos, sin, pi, sqrt, fabs
@@ -270,11 +272,12 @@ if __name__ == '__main__':
 
             # Get sunrise sunset for every hour of the day using the
             # default zenith.
-            print("\nTest 24 hours")
+            minutes = 20
+            print(f"\nTest 24 hours for every {minutes} minutes.")
 
             for hour in range(24):
                 # Every 20 minutes for an hour.
-                for minute in range(0, 60, 20):
+                for minute in range(0, 60, minutes):
                     date = dt.replace(hour=hour, minute=minute,
                                       second=0, microsecond=0)
                     __get_rise_set(date, lat=lat, lon=lon)

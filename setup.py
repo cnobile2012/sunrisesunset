@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
+"""
+Setup a pip environment.
+"""
+__docformat__ = "restructuredtext en"
 
 import os
 import re
 from setuptools import setup
+
+filepath = os.path.dirname(__file__)
 
 def version():
     """
@@ -13,7 +19,7 @@ def version():
     """
     regex = r'(?m)(^{}[\s]*=[\s]*(?P<ver>\d*)$)'
 
-    with open(os.path.join(os.path.dirname(__file__), 'include.mk')) as f:
+    with open(os.path.join(filepath, 'include.mk')) as f:
         ver = f.read()
 
     major = re.search(regex.format('MAJORVERSION'), ver).group('ver')
@@ -23,7 +29,9 @@ def version():
     env_value = os.environ.get('PR_TAG', '')
     return f"{major}.{minor}.{patch}{env_value}"
 
-with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
+filename = os.path.join(filepath, 'README.rst')
+
+with open(filename, mode='r', encoding='UTF-8') as readme:
     README = readme.read()
 
 # Allow setup.py to be run from any path.
