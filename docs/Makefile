@@ -2,10 +2,6 @@
 # Makefile
 # Development by Carl J. Nobile
 #
-# $Author$
-# $Date$
-# $Revision$
-#
 
 FQDN		= $(shell hostname --fqdn)
 DOC_DIR		= $(shell pwd)
@@ -26,9 +22,10 @@ tar	:
 	@(ln -s ${API_DIR} ${TARBALL_NAME}; \
           tar -chzvf ${TARBALL_NAME}.tar.gz ${TARBALL_NAME})
 #----------------------------------------------------------------------
+.PHONY	: clean clobber
 
 clean	:
 	@rm -f *~ \#* .\#*
 
 clobber	: clean
-	@rm -rf ${API_DIR} ${TARBALL_NAME} ${TARBALL_NAME}.tar.gz 
+	@rm -rf ${API_DIR} ${TARBALL_NAME} ${TARBALL_NAME}.tar.gz

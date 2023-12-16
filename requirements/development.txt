@@ -1,0 +1,15 @@
+# Import the base requirements
+-r base.txt
+
+pytz
+geopy
+#Sphinx
+#sphinx_rtd_theme
+
+#coverage
+#coverage_enable_subprocess
+wheel
+twine
+#mock
+#nose
+ipython
