@@ -18,8 +18,9 @@ def version():
     :rtype: str
     """
     regex = r'(?m)(^{}[\s]*=[\s]*(?P<ver>\d*)$)'
+    fullpath = os.path.join(filepath, 'include.mk')
 
-    with open(os.path.join(filepath, 'include.mk')) as f:
+    with open(fullpath, mode='r', encoding='UTF-8') as f:
         ver = f.read()
 
     major = re.search(regex.format('MAJORVERSION'), ver).group('ver')
