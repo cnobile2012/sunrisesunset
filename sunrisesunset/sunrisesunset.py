@@ -215,26 +215,25 @@ class SunriseSunset:
                                          second=second, microsecond=micro)
 
 
-def __get_rise_set(date, lat=35.9513, lon=-83.9142, zenith='official'):
-    """
-    The default lat and lon are for Knoxville, TN. The default zenith is
-    'official'.
-    """
-    rs = SunriseSunset(date, lat=lat, lon=lon, zenith=zenith)
-    rise_time, set_time = rs.sun_rise_set
-    print(f"Using zenith: {zenith}")
-    print(f"   Date/Time: {date}")
-    print(f"     Sunrise: {rise_time}")
-    print(f"      Sunset: {set_time}")
-    print(f"    Is night: {rs.is_night()}\n")
-
-
 if __name__ == '__main__':
     import sys
     import pytz
     #from pprint import pprint
     from geopy.geocoders import Nominatim
     from timezonefinder import TimezoneFinder
+
+    def get_rise_set(date, lat=35.9513, lon=-83.9142, zenith='official'):
+        """
+        The default lat and lon are for Knoxville, TN. The default zenith is
+        'official'.
+        """
+        rs = SunriseSunset(date, lat=lat, lon=lon, zenith=zenith)
+        rise_time, set_time = rs.sun_rise_set
+        print(f"Using zenith: {zenith}")
+        print(f"   Date/Time: {date}")
+        print(f"     Sunrise: {rise_time}")
+        print(f"      Sunset: {set_time}")
+        print(f"    Is night: {rs.is_night()}\n")
 
     ret = 1
     geolocator = Nominatim(user_agent='sunrisesunset')
@@ -268,7 +267,7 @@ if __name__ == '__main__':
             print("Test zenith")
 
             for zenith in zenith_keys:
-                __get_rise_set(dt, lat=lat, lon=lon, zenith=zenith)
+                get_rise_set(dt, lat=lat, lon=lon, zenith=zenith)
 
             # Get sunrise sunset for every hour of the day using the
             # default zenith.
@@ -280,7 +279,7 @@ if __name__ == '__main__':
                 for minute in range(0, 60, minutes):
                     date = dt.replace(hour=hour, minute=minute,
                                       second=0, microsecond=0)
-                    __get_rise_set(date, lat=lat, lon=lon)
+                    get_rise_set(date, lat=lat, lon=lon)
 
             ret = 0
     else:
