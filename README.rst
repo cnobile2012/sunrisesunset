@@ -32,9 +32,12 @@ Basic Usage
 .. code-block:: python
 
     import datetime
+    import pytz
     from sunrisesunset import SunriseSunset
 
-    dt = datetime.datetime.now()    
+    zone = pytz.timezone('America/New_York')
+    dt = datetime.datetime.now()
+    dt = dt.astimezone(zone)
     rs = SunriseSunset(dt, lat=35.9513, lon=83.9142, zenith='official')
     rise_time, set_time = rs.sun_rise_set
     print(f"     Sunrise: {rise_time}")

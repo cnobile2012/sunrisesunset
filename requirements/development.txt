@@ -12,5 +12,5 @@ timezonefinder
 wheel
 twine
 #mock
-#nose
+#pynose
 ipython

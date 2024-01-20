@@ -1,31 +1,25 @@
-#
-# Makefile
-# Development by Carl J. Nobile
+# Minimal makefile for Sphinx documentation
 #
 
-FQDN		= $(shell hostname --fqdn)
-DOC_DIR		= $(shell pwd)
-API_DIR		= api
-URL		= http://${FQDN}${DOC_DIR}/${API_DIR}/index.html
-TARBALL_NAME	= SunriseSunset
+# You can set these variables from the command line.
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+SPHINXPROJ    = SunriseSunsetAPI
+SOURCEDIR     = source
+BUILDDIR      = build
 
-all	: api-docs
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-#----------------------------------------------------------------------
-api-docs:
-	@(cd ..; epydoc -v --docformat epytext \
-          --name "Sunrise Sunset Calculator" -o docs/api --show-private \
-          --show-imports --graph all --url "${URL}" *.py \
-         )
-#----------------------------------------------------------------------
-tar	:
-	@(ln -s ${API_DIR} ${TARBALL_NAME}; \
-          tar -chzvf ${TARBALL_NAME}.tar.gz ${TARBALL_NAME})
-#----------------------------------------------------------------------
-.PHONY	: clean clobber
+.PHONY	: sphinx-apidoc
+sphinx-apidoc:
+	sphinx-apidoc -o source/ -H sunrisesunset -A 'Carl J. Nobile' -V 1.0 \
+         -R 1.0.0 ../sunrisesunset
 
-clean	:
-	@rm -f *~ \#* .\#*
+.PHONY: help Makefile
 
-clobber	: clean
-	@rm -rf ${API_DIR} ${TARBALL_NAME} ${TARBALL_NAME}.tar.gz
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+%: Makefile
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
